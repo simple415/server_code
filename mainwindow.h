@@ -29,16 +29,16 @@ private:
     QString serverUrl;
     QString qrCodePath;
 
-    bool initializeClient();
-    void cleanupClient();
+    bool initializeClient();    // 调用全局 initialize() 函数
+    void cleanupClient();       // 调用全局 cleanup() 函数
     void loadQRCodeImage(const QString &imagePath);
     void handlePaymentResponse(bool success, const QString &message, int httpCode);
     void showPaymentResultDialog(bool success);
 
-    // 声明外部函数
-    bool initialize();
-    void cleanup();
-    bool sendPaymentRequest(int code);
+    // 注释掉或删除这些声明，因为它们是全局函数，不是类成员
+    // bool initialize();
+    // void cleanup();
+    // bool sendPaymentRequest(int code);
 };
 
 #endif // MAINWINDOW_H

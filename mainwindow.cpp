@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "payment_client.h"  // 确保包含此头文件来获取全局函数的声明
 #include <QMessageBox>
 #include <QPixmap>
 #include <QFileDialog>
@@ -41,15 +42,15 @@ MainWindow::~MainWindow()
 
 bool MainWindow::initializeClient()
 {
-    // 调用原有的初始化函数
-    bool success = initialize();
+    // 调用全局的初始化函数，而不是尝试调用MainWindow::initialize()
+    bool success = ::initialize();  // 使用全局作用域运算符明确指出这是全局函数
     return success;
 }
 
 void MainWindow::cleanupClient()
 {
-    // 调用原有的清理函数
-    cleanup();
+    // 调用全局的清理函数，而不是尝试调用MainWindow::cleanup()
+    ::cleanup();  // 使用全局作用域运算符明确指出这是全局函数
 }
 
 void MainWindow::loadQRCodeImage(const QString &imagePath)
@@ -87,8 +88,8 @@ void MainWindow::on_btnConfirmPayment_clicked()
     // 设置当前服务器URL
     SERVER_URL = serverUrl;
 
-    // 发送请求
-    bool success = sendPaymentRequest(1);
+    // 发送请求 - 调用全局函数
+    bool success = ::sendPaymentRequest(1);  // 使用全局作用域运算符
     if (!success) {
         handlePaymentResponse(false, "请求发送失败", 0);
     }
@@ -102,8 +103,8 @@ void MainWindow::on_btnReconfirm_clicked()
     // 设置当前服务器URL
     SERVER_URL = serverUrl;
 
-    // 发送请求
-    bool success = sendPaymentRequest(0);
+    // 发送请求 - 调用全局函数
+    bool success = ::sendPaymentRequest(0);  // 使用全局作用域运算符
     if (!success) {
         handlePaymentResponse(false, "请求发送失败", 0);
     }
